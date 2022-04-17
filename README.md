@@ -21,5 +21,5 @@ actor the throughput drops to 4500 messages/second (~ x3000 times fewer / second
 
 ``sh
 mvn package
-java -jar xoom-benchmarks/target/benchmarks.jar 
+java -jar xoom-benchmarks/target/benchmarks.jar EchoServerActorMessageBenchmark
 ``
