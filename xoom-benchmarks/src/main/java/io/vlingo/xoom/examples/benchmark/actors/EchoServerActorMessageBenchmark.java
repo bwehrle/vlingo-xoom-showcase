@@ -3,6 +3,7 @@ package io.vlingo.xoom.examples.benchmark.actors;
 import io.vlingo.xoom.actors.Configuration;
 import io.vlingo.xoom.actors.Definition;
 import io.vlingo.xoom.actors.World;
+import io.vlingo.xoom.actors.plugin.mailbox.agronampscarrayqueue.ManyToOneConcurrentArrayQueuePlugin;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class EchoServerActorMessageBenchmark {
   private World world;
-  private static final int MaxCount = 100;
+  private static final int MaxCount = 100;  /* NOTE THIS IS 100, not 100 x 10^6) */
   private int countReceived;
 
   @Setup
