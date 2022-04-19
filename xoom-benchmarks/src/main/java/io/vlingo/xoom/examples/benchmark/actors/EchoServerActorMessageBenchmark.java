@@ -2,8 +2,12 @@ package io.vlingo.xoom.examples.benchmark.actors;
 
 import io.vlingo.xoom.actors.Configuration;
 import io.vlingo.xoom.actors.Definition;
+import io.vlingo.xoom.actors.Properties;
 import io.vlingo.xoom.actors.World;
+import io.vlingo.xoom.actors.plugin.PluginConfiguration;
+import io.vlingo.xoom.actors.plugin.PluginProperties;
 import io.vlingo.xoom.actors.plugin.mailbox.agronampscarrayqueue.ManyToOneConcurrentArrayQueuePlugin;
+import io.vlingo.xoom.actors.plugin.mailbox.agronampscarrayqueue.ManyToOneConcurrentArrayQueuePlugin.ManyToOneConcurrentArrayQueuePluginConfiguration;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -19,11 +23,7 @@ public class EchoServerActorMessageBenchmark {
 
   @Setup
   public void setup() {
-    world =  World.start("EchoServerActorMessageBenchmark", getConfiguration());
-  }
-
-  private Configuration getConfiguration() {
-    return Configuration.define();
+    world =  World.start("EchoServerActorMessageBenchmark");
   }
 
   @TearDown
@@ -50,14 +50,14 @@ public class EchoServerActorMessageBenchmark {
             EchoServer.class,
             Definition.has(EchoServerTestResultActor.class,
                     Definition.parameters(testResults),
-                    "arrayQueueMailbox",
+                    "Ss",
                     id1));
 
     final EchoClient echoClient = world.actorFor(
             EchoClient.class,
             Definition.has(EchoClientActor.class,
                     Definition.parameters(echoServer),
-                    "arrayQueueMailbox",
+                    "ssaSS",
                     id2));
 
     for (int i = 0; i < countUntil; i++) {
