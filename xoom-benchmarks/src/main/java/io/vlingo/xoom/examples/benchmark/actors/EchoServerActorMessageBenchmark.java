@@ -50,14 +50,14 @@ public class EchoServerActorMessageBenchmark {
             EchoServer.class,
             Definition.has(EchoServerTestResultActor.class,
                     Definition.parameters(testResults),
-                    "Ss",
+                    "arrayQueueMailbox1",
                     id1));
 
     final EchoClient echoClient = world.actorFor(
             EchoClient.class,
             Definition.has(EchoClientActor.class,
                     Definition.parameters(echoServer),
-                    "ssaSS",
+                    "arrayQueueMailbox2",
                     id2));
 
     for (int i = 0; i < countUntil; i++) {
