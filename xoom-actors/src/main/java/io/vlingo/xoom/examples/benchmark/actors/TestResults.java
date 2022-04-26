@@ -2,7 +2,7 @@ package io.vlingo.xoom.examples.benchmark.actors;
 
 import java.util.concurrent.CountDownLatch;
 
-public class TestResults {
+public class TestResults implements ExecuteUntil {
     private int count;
     private final int expectedMessages;
     private final CountDownLatch latch;
@@ -14,7 +14,8 @@ public class TestResults {
         this.lock = new Object();
     }
 
-    public void increment() {
+    @Override
+    public void happened() {
         if (++count >= expectedMessages) {
             synchronized (lock) {
                 ++count; // force sync across threads
@@ -23,7 +24,7 @@ public class TestResults {
         }
     }
 
-    public int waitForExpectedMessages() {
+    public int awaitUntilComplete() {
         int retries = 0;
 
         while (true) {

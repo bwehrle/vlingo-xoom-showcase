@@ -3,7 +3,6 @@ package io.vlingo.xoom.examples.benchmark.actors;
 import io.vlingo.xoom.actors.Configuration;
 import io.vlingo.xoom.actors.Definition;
 import io.vlingo.xoom.actors.World;
-import io.vlingo.xoom.actors.plugin.mailbox.agronampscarrayqueue.ManyToOneConcurrentArrayQueuePlugin;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -63,6 +62,6 @@ public class EchoServerActorMessageBenchmark {
     for (int i = 0; i < countUntil; i++) {
       echoClient.doEchoNoCompletes();
     }
-    countReceived = testResults.waitForExpectedMessages();
+    countReceived = testResults.awaitUntilComplete();
   }
 }
