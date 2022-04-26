@@ -1,13 +1,7 @@
 package io.vlingo.xoom.examples.benchmark.actors;
 
-import io.vlingo.xoom.actors.Configuration;
 import io.vlingo.xoom.actors.Definition;
-import io.vlingo.xoom.actors.Properties;
 import io.vlingo.xoom.actors.World;
-import io.vlingo.xoom.actors.plugin.PluginConfiguration;
-import io.vlingo.xoom.actors.plugin.PluginProperties;
-import io.vlingo.xoom.actors.plugin.mailbox.agronampscarrayqueue.ManyToOneConcurrentArrayQueuePlugin;
-import io.vlingo.xoom.actors.plugin.mailbox.agronampscarrayqueue.ManyToOneConcurrentArrayQueuePlugin.ManyToOneConcurrentArrayQueuePluginConfiguration;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -42,14 +36,14 @@ public class EchoServerActorMessageBenchmark {
   @Threads(1)
   public void throughputBenchmark() {
     int countUntil = MaxCount;
-    TestResults testResults = new TestResults(countUntil);
+    ExecuteUntil executeUntil = new ExecuteTestUntil(countUntil);
     String id1 = String.format("id-%d", (int) (Math.random() * 10.0));
     String id2 = String.format("id-%d", (int) (Math.random() * 10.0));
 
     final EchoServer echoServer = world.actorFor(
             EchoServer.class,
             Definition.has(EchoServerTestResultActor.class,
-                    Definition.parameters(testResults),
+                    Definition.parameters(executeUntil),
                     "arrayQueueMailbox1",
                     id1));
 
@@ -63,6 +57,6 @@ public class EchoServerActorMessageBenchmark {
     for (int i = 0; i < countUntil; i++) {
       echoClient.doEchoNoCompletes();
     }
-    countReceived = testResults.awaitUntilComplete();
+    countReceived = executeUntil.awaitUntilComplete();
   }
 }
