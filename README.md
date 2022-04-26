@@ -17,9 +17,10 @@ java -jar xoom-benchmarks/target/benchmarks.jar
 
 ## Client-server benchmark
 An invoker can send about 14M-15M messages/second to an actor.  However, when sending the messages to a client of a another
-actor the throughput drops to 4500 messages/second (~ x3000 times fewer / second).
+actor the throughput drops to 1.2M messages/second.  In this branch I tried using the fast Array Queue plugin for two actors 
+but this fails with a warning debug print.
 
-``sh
+```sh
 mvn package
 java -jar xoom-benchmarks/target/benchmarks.jar EchoServerActorMessageBenchmark
-``
+```
