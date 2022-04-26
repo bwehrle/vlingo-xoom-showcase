@@ -5,36 +5,36 @@ import io.vlingo.xoom.common.Completes;
 
 public class EchoServerTestResultActor extends Actor implements EchoServer {
 
-    private final TestResults testResults;
+    private final ExecuteUntil executeUntil;
     private int counterValue;
     private String echoString;
     private Object echoObj;
 
-    public EchoServerTestResultActor(TestResults testResults) {
-        this.testResults = testResults;
+    public EchoServerTestResultActor(ExecuteUntil executeUntil) {
+        this.executeUntil = executeUntil;
     }
 
     @Override
     public void echoCount(int counter) {
         counterValue = counter;
-        testResults.increment();
+        executeUntil.happened();
     }
 
     @Override
     public void echoString(String stringValue) {
         echoString = stringValue;
-        testResults.increment();
+        executeUntil.happened();
     }
 
     @Override
     public void echoObj(Object message) {
         echoObj = message;
-        testResults.increment();
+        executeUntil.happened();
     }
 
     @Override
     public Completes<Integer> countEchoObject(Object obj) {
-        testResults.increment();
+        executeUntil.happened();
         counterValue++;
         return completes().with(counterValue);
     }

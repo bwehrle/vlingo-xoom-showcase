@@ -63,6 +63,6 @@ public class EchoServerActorMessageBenchmark {
     for (int i = 0; i < countUntil; i++) {
       echoClient.doEchoNoCompletes();
     }
-    countReceived = testResults.waitForExpectedMessages();
+    countReceived = testResults.awaitUntilComplete();
   }
 }
