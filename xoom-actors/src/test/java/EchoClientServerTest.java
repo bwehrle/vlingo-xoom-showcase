@@ -16,7 +16,7 @@ public class EchoClientServerTest {
 
     @Before
     public void setup() {
-        world = World.startWithDefaults("testworld");
+        world = World.start("testworld");
     }
 
     @Test
@@ -26,10 +26,14 @@ public class EchoClientServerTest {
         EchoServer echoServer = world.actorFor(
                 EchoServer.class,
                 Definition.has(EchoServerActor.class,
-                        Definition.parameters(addressSupplier.get())));
+                        Definition.parameters(addressSupplier.get()),
+                        "arrayQueueMailbox1",
+                        "id1"));
         EchoClient echoClient = world.actorFor(
                 EchoClient.class,
-                Definition.has(EchoClientActor.class, Definition.parameters(echoServer)));
+                Definition.has(EchoClientActor.class, Definition.parameters(echoServer),
+                        "arrayQueueMailbox2",
+                        "id2"));
 
         TestUntil testUntil = TestUntil.happenings(1);
         echoClient.doEcho().andThenConsume( s -> testUntil.happened());

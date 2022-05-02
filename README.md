@@ -21,6 +21,6 @@ actor the throughput drops to 1.2M messages/second.  In this branch I tried usin
 but this fails with a warning debug print.
 
 ```sh
-mvn package
+mvn clean package
 java -jar xoom-benchmarks/target/benchmarks.jar EchoServerActorMessageBenchmark
 ```
