@@ -1,5 +1,9 @@
+import io.vlingo.xoom.actors.Configuration;
 import io.vlingo.xoom.actors.Definition;
 import io.vlingo.xoom.actors.World;
+import io.vlingo.xoom.actors.plugin.PluginProperties;
+import io.vlingo.xoom.actors.plugin.completes.PooledCompletesPlugin;
+import io.vlingo.xoom.actors.plugin.mailbox.agronampscarrayqueue.ManyToOneConcurrentArrayQueuePlugin;
 import io.vlingo.xoom.actors.testkit.TestUntil;
 import io.vlingo.xoom.examples.benchmark.actors.EchoClient;
 import io.vlingo.xoom.examples.benchmark.actors.EchoClientActor;
@@ -8,6 +12,7 @@ import io.vlingo.xoom.examples.benchmark.actors.EchoServerActor;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.function.Supplier;
 
 public class EchoClientServerTest {
@@ -15,7 +20,7 @@ public class EchoClientServerTest {
     private World world;
 
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         world = World.start("testworld");
     }
 
